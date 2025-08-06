@@ -71,10 +71,8 @@ export default function VectorGameCanvas({ v1, v2, setV1, setV2 }) {
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      {/* Título del nivel */}
       <h2 className="text-xl font-bold">Nivel 1: Juego de Suma de Vectores</h2>
 
-      {/* Canvas */}
       <Sketch
         setup={setup}
         draw={draw}

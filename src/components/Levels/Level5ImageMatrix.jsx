@@ -91,10 +91,8 @@ export default function Level5ImageMatrix() {
       </h2>
 
       <div className="flex space-x-4">
-        {/* Canvas */}
         <Sketch setup={setup} draw={draw} />
 
-        {/* Controles */}
         <div className="bg-white p-4 rounded-lg shadow w-[250px]">
           <label>Posición X:</label>
           <input

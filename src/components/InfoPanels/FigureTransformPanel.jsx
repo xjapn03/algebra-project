@@ -1,10 +1,8 @@
-// FigureTransformPanel.jsx
 export default function FigureTransformPanel({ figure, setFigure, vectors }) {
   return (
     <div className="bg-white p-4 rounded-lg shadow w-[400px]">
       <h3 className="font-bold mb-2">Controles de Transformación</h3>
 
-      {/* Selector */}
       <label>Figura:</label>
       <select
         value={figure.type}
@@ -18,7 +16,6 @@ export default function FigureTransformPanel({ figure, setFigure, vectors }) {
         <option value="rectangle">Rectángulo</option>
       </select>
 
-      {/* Rotación */}
       <label>Rotación: {figure.angle}°</label>
       <input
         type="range"
@@ -31,7 +28,6 @@ export default function FigureTransformPanel({ figure, setFigure, vectors }) {
         className="w-full mb-2"
       />
 
-      {/* Escala */}
       <label>Escala: {figure.scale.toFixed(2)}</label>
       <input
         type="range"
@@ -45,7 +41,6 @@ export default function FigureTransformPanel({ figure, setFigure, vectors }) {
         className="w-full mb-2"
       />
 
-      {/* Posición */}
       <label>Posición X:</label>
       <input
         type="number"
@@ -65,7 +60,6 @@ export default function FigureTransformPanel({ figure, setFigure, vectors }) {
         className="border rounded p-1 w-full mb-4"
       />
 
-      {/* Tabla de vectores */}
       {vectors && (
         <div>
           <h4 className="font-semibold mb-2">Vectores</h4>

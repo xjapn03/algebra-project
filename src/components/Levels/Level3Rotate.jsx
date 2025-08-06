@@ -68,7 +68,6 @@ export default function Level3Rotate() {
         Nivel 3: Mueve y rota la figura para igualar la objetivo
       </h2>
 
-      {/* Igual que en Nivel 2 */}
       <div className="flex flex-col md:flex-row gap-4">
         <FigureTransformCanvas
           figure={figure}

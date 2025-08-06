@@ -76,7 +76,6 @@ export default function Level4Transform() {
         Nivel 4: Aplica una transformación lineal para igualar la figura objetivo
       </h2>
 
-      {/* Canvas + tabla alineados como en Nivel 2 */}
       <div className="flex flex-col md:flex-row gap-4">
         <FigureTransformCanvas
           figure={figure}

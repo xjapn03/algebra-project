@@ -1,4 +1,3 @@
-// VectorInfoPanel.jsx
 import React from "react";
 
 export default function VectorInfoPanel({ v1, v2 }) {
