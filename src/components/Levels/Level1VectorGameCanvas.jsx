@@ -1,8 +1,8 @@
-// VectorGameCanvas.jsx
+// Level1VectorGameCanvas.jsx
 import React, { useRef } from "react";
 import Sketch from "react-p5";
 
-export default function VectorGameCanvas({ v1, v2, setV1, setV2 }) {
+export default function Level1VectorGameCanvas({ v1, v2, setV1, setV2 }) {
   const originX = useRef(0);
   const originY = useRef(0);
   const dragging = useRef(null);
@@ -15,13 +15,17 @@ export default function VectorGameCanvas({ v1, v2, setV1, setV2 }) {
 
   const draw = (p5) => {
     p5.background(240);
+
+    // Ejes
     p5.stroke(200);
     p5.line(originX.current, 0, originX.current, p5.height);
     p5.line(0, originY.current, p5.width, originY.current);
 
+    // Vectores
     drawVector(p5, v1, "red");
     drawVector(p5, v2, "blue");
 
+    // Suma de vectores
     const sum = { x: v1.x + v2.x, y: v1.y + v2.y };
     drawVector(p5, sum, "green");
   };
@@ -67,12 +71,18 @@ export default function VectorGameCanvas({ v1, v2, setV1, setV2 }) {
   };
 
   return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      mousePressed={mousePressed}
-      mouseDragged={mouseDragged}
-      mouseReleased={mouseReleased}
-    />
+    <div className="flex flex-col items-center space-y-4">
+      {/* Título del nivel */}
+      <h2 className="text-xl font-bold">Nivel 1: Juego de Suma de Vectores</h2>
+
+      {/* Canvas */}
+      <Sketch
+        setup={setup}
+        draw={draw}
+        mousePressed={mousePressed}
+        mouseDragged={mouseDragged}
+        mouseReleased={mouseReleased}
+      />
+    </div>
   );
 }
