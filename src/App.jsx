@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Level1VectorGame from "./components/Levels/Level1VectorGameCanvas";
-import VectorGame from "./components/VectorGame";
-import Level1DrawShape from "./components/Levels/Level2DrawShape";
+import Level1VectorGame from "./components/Levels/Level1VectorGame";
+import Level2DrawShape from "./components/Levels/Level2DrawShape";
 import Level3Rotate from "./components/Levels/Level3Rotate";
 import Level4Transform from "./components/Levels/Level4Transform";
 import Level5ImageMatrix from "./components/Levels/Level5ImageMatrix";
@@ -58,8 +57,8 @@ export default function App() {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          {currentLevel === "vectors" && <VectorGame />}
-          {currentLevel === "drawShape" && <Level1DrawShape />}
+          {currentLevel === "vectors" && <Level1VectorGame />}
+          {currentLevel === "drawShape" && <Level2DrawShape />}
           {currentLevel === "rotate" && <Level3Rotate />}
           {currentLevel === "transform" && <Level4Transform />}
           {currentLevel === "imageMatrix" && <Level5ImageMatrix />}
