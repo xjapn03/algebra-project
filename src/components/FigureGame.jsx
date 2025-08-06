@@ -1,4 +1,3 @@
-// FigureGame.jsx
 import { useState } from "react";
 import FigureTransformCanvas from "./CanvasModes/FigureTransformCanvas";
 import FigureTransformPanel from "./InfoPanels/FigureTransformPanel";
@@ -13,10 +12,20 @@ export default function FigureGame() {
     scale: 1,
   });
 
+  const [vectors, setVectors] = useState(null);
+
   return (
     <div className="flex flex-col items-center space-y-4 p-4">
-      <FigureTransformCanvas figure={figure} setFigure={setFigure} />
-      <FigureTransformPanel figure={figure} setFigure={setFigure} />
+      <FigureTransformCanvas
+        figure={figure}
+        setFigure={setFigure}
+        onVectorsUpdate={setVectors}
+      />
+      <FigureTransformPanel
+        figure={figure}
+        setFigure={setFigure}
+        vectors={vectors}
+      />
     </div>
   );
 }

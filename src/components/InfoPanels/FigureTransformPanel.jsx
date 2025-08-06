@@ -1,14 +1,16 @@
 // FigureTransformPanel.jsx
-export default function FigureTransformPanel({ figure, setFigure }) {
+export default function FigureTransformPanel({ figure, setFigure, vectors }) {
   return (
     <div className="bg-white p-4 rounded-lg shadow w-[400px]">
       <h3 className="font-bold mb-2">Controles de Transformación</h3>
 
-      {/* Selector de figura */}
+      {/* Selector */}
       <label>Figura:</label>
       <select
         value={figure.type}
-        onChange={(e) => setFigure((prev) => ({ ...prev, type: e.target.value }))}
+        onChange={(e) =>
+          setFigure((prev) => ({ ...prev, type: e.target.value }))
+        }
         className="border rounded p-1 w-full mb-2"
       >
         <option value="square">Cuadrado</option>
@@ -43,7 +45,7 @@ export default function FigureTransformPanel({ figure, setFigure }) {
         className="w-full mb-2"
       />
 
-      {/* Posición X */}
+      {/* Posición */}
       <label>Posición X:</label>
       <input
         type="number"
@@ -53,8 +55,6 @@ export default function FigureTransformPanel({ figure, setFigure }) {
         }
         className="border rounded p-1 w-full mb-2"
       />
-
-      {/* Posición Y */}
       <label>Posición Y:</label>
       <input
         type="number"
@@ -62,8 +62,38 @@ export default function FigureTransformPanel({ figure, setFigure }) {
         onChange={(e) =>
           setFigure((prev) => ({ ...prev, y: parseInt(e.target.value) }))
         }
-        className="border rounded p-1 w-full"
+        className="border rounded p-1 w-full mb-4"
       />
+
+      {/* Tabla de vectores */}
+      {vectors && (
+        <div>
+          <h4 className="font-semibold mb-2">Vectores</h4>
+          <table className="w-full border text-sm">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="border p-1">#</th>
+                <th className="border p-1">Original (x, y)</th>
+                <th className="border p-1">Transformado (x, y)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vectors.base.map((v, i) => (
+                <tr key={i}>
+                  <td className="border p-1">{i + 1}</td>
+                  <td className="border p-1">
+                    ({v.x.toFixed(1)}, {v.y.toFixed(1)})
+                  </td>
+                  <td className="border p-1">
+                    ({vectors.transformed[i].x.toFixed(1)},{" "}
+                    {vectors.transformed[i].y.toFixed(1)})
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
