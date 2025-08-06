@@ -1,7 +1,7 @@
 // VectorGame.jsx
 import React, { useState } from "react";
-import VectorGameCanvas from "./VectorGameCanvas";
-import VectorInfoPanel from "./VectorInfoPanel";
+import VectorGameCanvas from "./CanvasModes/VectorGameCanvas";
+import VectorInfoPanel from "./InfoPanels/VectorInfoPanel";
 
 export default function VectorGame() {
   const [v1, setV1] = useState({ x: 100, y: 50 });
