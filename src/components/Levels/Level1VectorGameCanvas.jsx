@@ -1,8 +1,8 @@
-// VectorGameCanvas.jsx
+// Level1VectorGameCanvas.jsx
 import React, { useRef } from "react";
 import Sketch from "react-p5";
 
-export default function VectorGameCanvas({ v1, v2, setV1, setV2 }) {
+export default function Level1VectorGameCanvas({ v1, v2, setV1, setV2 }) {
   const originX = useRef(0);
   const originY = useRef(0);
   const dragging = useRef(null);

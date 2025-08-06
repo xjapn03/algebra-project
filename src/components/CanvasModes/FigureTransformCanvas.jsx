@@ -1,4 +1,3 @@
-// FigureTransformCanvas.jsx
 import React, { useRef } from "react";
 import Sketch from "react-p5";
 
@@ -63,30 +62,43 @@ export default function FigureTransformCanvas({
     p5.line(originX.current, 0, originX.current, p5.height);
     p5.line(0, originY.current, p5.width, originY.current);
 
-    // Si hay extraDraw, lo ejecutamos antes de dibujar la figura del jugador
+    // Dibujo de figura objetivo (si aplica)
     if (extraDraw) {
       extraDraw(p5, originX.current, originY.current, transformVector, getBaseVectors);
     }
 
-    // Vectores del jugador
+    // Vectores base y transformados de la figura
     const baseVectors = getBaseVectors(figure.type, figure.size);
     const transformedVectors = baseVectors.map((v) =>
       transformVector(v, figure.scale, figure.angle)
     );
 
+    // Enviar a la tabla de info (array simple)
     if (onVectorsUpdate) {
-      onVectorsUpdate({ base: baseVectors, transformed: transformedVectors });
+      onVectorsUpdate(transformedVectors);
     }
 
-    // Dibujar vectores
-    transformedVectors.forEach((v) => {
+    // Dibujar vectores transformados con etiquetas
+    transformedVectors.forEach((v, i) => {
+      const startX = originX.current + figure.x;
+      const startY = originY.current - figure.y;
+      const endX = startX + v.x;
+      const endY = startY - v.y;
+
       p5.stroke("orange");
-      p5.line(
-        originX.current + figure.x,
-        originY.current - figure.y,
-        originX.current + figure.x + v.x,
-        originY.current - figure.y - v.y
-      );
+      p5.strokeWeight(2);
+      p5.line(startX, startY, endX, endY);
+
+      // Punto final
+      p5.fill("orange");
+      p5.noStroke();
+      p5.ellipse(endX, endY, 8, 8);
+
+      // Etiqueta con coordenadas
+      p5.fill(0);
+      p5.textSize(12);
+      p5.textAlign(p5.LEFT, p5.TOP);
+      p5.text(`V${i + 1} (${v.x.toFixed(1)}, ${v.y.toFixed(1)})`, endX + 5, endY + 5);
     });
 
     // Figura del jugador
@@ -102,12 +114,9 @@ export default function FigureTransformCanvas({
       p5.rect(0, 0, figure.size, figure.size);
     } else if (figure.type === "triangle") {
       p5.triangle(
-        0,
-        -figure.size / 2,
-        -figure.size / 2,
-        figure.size / 2,
-        figure.size / 2,
-        figure.size / 2
+        0, -figure.size / 2,
+        -figure.size / 2, figure.size / 2,
+        figure.size / 2, figure.size / 2
       );
     } else if (figure.type === "rectangle") {
       p5.rectMode(p5.CENTER);

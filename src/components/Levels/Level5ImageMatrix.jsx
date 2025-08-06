@@ -1,9 +1,9 @@
-// Levels/Level4ImageMatrix.jsx
+// Levels/Level5ImageMatrix.jsx
 import { useState, useEffect } from "react";
 import Sketch from "react-p5";
 import imgSrc from "../../assets/react.svg";
 
-export default function Level4ImageMatrix() {
+export default function Level5ImageMatrix() {
   const [img, setImg] = useState(null);
 
   // Estado de la imagen del jugador

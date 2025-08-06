@@ -1,10 +1,9 @@
-// Levels/Level3Transform.jsx
 import { useState } from "react";
 import FigureTransformCanvas from "../CanvasModes/FigureTransformCanvas";
 import FigureTransformPanel from "../InfoPanels/FigureTransformPanel";
+import FigureVectorsInfo from "../InfoPanels/FigureVectorsInfo";
 
-export default function Level3Transform() {
-  // Figura del jugador
+export default function Level4Transform() {
   const [figure, setFigure] = useState({
     type: "triangle",
     x: 0,
@@ -14,7 +13,6 @@ export default function Level3Transform() {
     scale: 1,
   });
 
-  // Figura objetivo
   const targetFigure = {
     type: "triangle",
     x: 100,
@@ -24,9 +22,9 @@ export default function Level3Transform() {
     scale: 1.5,
   };
 
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [vectors, setVectors] = useState([]);
+  const [message, setMessage] = useState(null);
 
-  // Validar transformación (posición, escala y rotación)
   const validateTransformation = () => {
     const posMatch =
       Math.abs(figure.x - targetFigure.x) < 5 &&
@@ -36,20 +34,13 @@ export default function Level3Transform() {
       Math.abs(((figure.angle % 360) + 360) % 360 - targetFigure.angle) < 5;
 
     if (posMatch && scaleMatch && angleMatch) {
-      setIsCorrect(true);
+      setMessage({ type: "success", text: "¡Correcto! Has aplicado la transformación" });
     } else {
-      setIsCorrect(false);
+      setMessage({ type: "error", text: "La figura no coincide con la objetivo. Intenta de nuevo." });
     }
   };
 
-  // Dibuja la figura objetivo
-  const drawTargetFigure = (
-    p5,
-    originX,
-    originY,
-    transformVector,
-    getBaseVectors
-  ) => {
+  const drawTargetFigure = (p5, originX, originY, transformVector, getBaseVectors) => {
     const baseVectors = getBaseVectors(targetFigure.type, targetFigure.size);
     const transformedVectors = baseVectors.map((v) =>
       transformVector(v, targetFigure.scale, targetFigure.angle)
@@ -72,12 +63,9 @@ export default function Level3Transform() {
     p5.fill(180);
     p5.noStroke();
     p5.triangle(
-      0,
-      -targetFigure.size / 2,
-      -targetFigure.size / 2,
-      targetFigure.size / 2,
-      targetFigure.size / 2,
-      targetFigure.size / 2
+      0, -targetFigure.size / 2,
+      -targetFigure.size / 2, targetFigure.size / 2,
+      targetFigure.size / 2, targetFigure.size / 2
     );
     p5.pop();
   };
@@ -88,11 +76,16 @@ export default function Level3Transform() {
         Nivel 4: Aplica una transformación lineal para igualar la figura objetivo
       </h2>
 
-      <FigureTransformCanvas
-        figure={figure}
-        setFigure={setFigure}
-        extraDraw={drawTargetFigure}
-      />
+      {/* Canvas + tabla alineados como en Nivel 2 */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <FigureTransformCanvas
+          figure={figure}
+          setFigure={setFigure}
+          onVectorsUpdate={setVectors}
+          extraDraw={drawTargetFigure}
+        />
+        <FigureVectorsInfo vectors={vectors} />
+      </div>
 
       <FigureTransformPanel figure={figure} setFigure={setFigure} />
 
@@ -103,8 +96,14 @@ export default function Level3Transform() {
         Validar
       </button>
 
-      {isCorrect && (
-        <p className="text-green-600 font-bold">¡Correcto! Has aplicado la transformación</p>
+      {message && (
+        <p
+          className={`font-bold mt-2 ${
+            message.type === "success" ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {message.text}
+        </p>
       )}
     </div>
   );

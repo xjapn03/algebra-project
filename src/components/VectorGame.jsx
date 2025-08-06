@@ -1,6 +1,6 @@
 // VectorGame.jsx
 import React, { useState } from "react";
-import VectorGameCanvas from "./Levels/Level1VectorGameCanvas";
+import Level1VectorGameCanvas from "./Levels/Level1VectorGameCanvas";
 import VectorInfoPanel from "./InfoPanels/VectorInfoPanel";
 
 export default function VectorGame() {
@@ -9,7 +9,7 @@ export default function VectorGame() {
 
   return (
     <div className="flex flex-col items-center space-y-4 p-4">
-      <VectorGameCanvas v1={v1} v2={v2} setV1={setV1} setV2={setV2} />
+      <Level1VectorGameCanvas v1={v1} v2={v2} setV1={setV1} setV2={setV2} />
       <VectorInfoPanel v1={v1} v2={v2} />
     </div>
   );

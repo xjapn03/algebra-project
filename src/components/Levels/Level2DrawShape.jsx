@@ -1,10 +1,9 @@
-// Levels/Level1DrawShape.jsx
 import { useState } from "react";
 import FigureTransformCanvas from "../CanvasModes/FigureTransformCanvas";
 import FigureTransformPanel from "../InfoPanels/FigureTransformPanel";
+import FigureVectorsInfo from "../InfoPanels/FigureVectorsInfo";
 
-export default function Level1DrawShape({ onBack }) {
-  // Figura del jugador
+export default function Level2DrawShape({ onBack }) {
   const [figure, setFigure] = useState({
     type: "square",
     x: -150,
@@ -14,7 +13,6 @@ export default function Level1DrawShape({ onBack }) {
     scale: 1,
   });
 
-  // Figura objetivo
   const targetFigure = {
     type: "square",
     x: 150,
@@ -24,26 +22,15 @@ export default function Level1DrawShape({ onBack }) {
     scale: 1,
   };
 
-  // Mensaje de validación
   const [message, setMessage] = useState(null);
+  const [vectors, setVectors] = useState([]);
 
-  // Callback para actualizar vectores (opcional)
-  const handleVectorsUpdate = (vectors) => {
-    console.log("Vectores:", vectors);
+  const handleVectorsUpdate = (newVectors) => {
+    setVectors(newVectors);
   };
 
-  // Función que dibuja la figura objetivo
-  const drawTargetFigure = (
-    p5,
-    originX,
-    originY,
-    transformVector,
-    getBaseVectors
-  ) => {
-    const baseVectors = getBaseVectors(
-      targetFigure.type,
-      targetFigure.size
-    );
+  const drawTargetFigure = (p5, originX, originY, transformVector, getBaseVectors) => {
+    const baseVectors = getBaseVectors(targetFigure.type, targetFigure.size);
     const transformedVectors = baseVectors.map((v) =>
       transformVector(v, targetFigure.scale, targetFigure.angle)
     );
@@ -59,7 +46,7 @@ export default function Level1DrawShape({ onBack }) {
       );
     });
 
-    // Dibujar figura objetivo en gris
+    // Dibujar figura objetivo
     p5.push();
     p5.translate(originX + targetFigure.x, originY - targetFigure.y);
     p5.scale(targetFigure.scale);
@@ -72,12 +59,9 @@ export default function Level1DrawShape({ onBack }) {
       p5.rect(0, 0, targetFigure.size, targetFigure.size);
     } else if (targetFigure.type === "triangle") {
       p5.triangle(
-        0,
-        -targetFigure.size / 2,
-        -targetFigure.size / 2,
-        targetFigure.size / 2,
-        targetFigure.size / 2,
-        targetFigure.size / 2
+        0, -targetFigure.size / 2,
+        -targetFigure.size / 2, targetFigure.size / 2,
+        targetFigure.size / 2, targetFigure.size / 2
       );
     } else if (targetFigure.type === "rectangle") {
       p5.rectMode(p5.CENTER);
@@ -86,7 +70,6 @@ export default function Level1DrawShape({ onBack }) {
     p5.pop();
   };
 
-  // Validar figura
   const validateFigure = () => {
     const matchType = figure.type === targetFigure.type;
     const matchAngle = Math.abs(figure.angle - targetFigure.angle) < 1;
@@ -112,16 +95,18 @@ export default function Level1DrawShape({ onBack }) {
     <div className="flex flex-col items-center space-y-4">
       <h2 className="text-xl font-bold">Nivel 2: Dibuja la figura objetivo</h2>
 
-      <FigureTransformCanvas
-        figure={figure}
-        setFigure={setFigure}
-        onVectorsUpdate={handleVectorsUpdate}
-        extraDraw={drawTargetFigure}
-      />
+      <div className="flex flex-col md:flex-row gap-4">
+        <FigureTransformCanvas
+          figure={figure}
+          setFigure={setFigure}
+          onVectorsUpdate={handleVectorsUpdate}
+          extraDraw={drawTargetFigure}
+        />
+        <FigureVectorsInfo vectors={vectors} />
+      </div>
 
       <FigureTransformPanel figure={figure} setFigure={setFigure} />
 
-      {/* Botón de validación */}
       <button
         onClick={validateFigure}
         className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
@@ -129,7 +114,6 @@ export default function Level1DrawShape({ onBack }) {
         Validar
       </button>
 
-      {/* Mensaje de resultado con color según tipo */}
       {message && (
         <p
           className={`mt-2 font-semibold ${
@@ -140,7 +124,6 @@ export default function Level1DrawShape({ onBack }) {
         </p>
       )}
 
-      {/* Botón volver */}
       {onBack && (
         <button
           onClick={onBack}

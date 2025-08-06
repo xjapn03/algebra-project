@@ -1,10 +1,9 @@
-// Levels/Level2Rotate.jsx
 import { useState } from "react";
 import FigureTransformCanvas from "../CanvasModes/FigureTransformCanvas";
 import FigureTransformPanel from "../InfoPanels/FigureTransformPanel";
+import FigureVectorsInfo from "../InfoPanels/FigureVectorsInfo";
 
-export default function Level2Rotate() {
-  // Figura del jugador
+export default function Level3Rotate() {
   const [figure, setFigure] = useState({
     type: "square",
     x: 0,
@@ -14,7 +13,6 @@ export default function Level2Rotate() {
     scale: 1,
   });
 
-  // Figura objetivo
   const targetFigure = {
     type: "square",
     x: 100,
@@ -25,8 +23,8 @@ export default function Level2Rotate() {
   };
 
   const [isCorrect, setIsCorrect] = useState(false);
+  const [vectors, setVectors] = useState([]);
 
-  // Función para validar coincidencia
   const validatePositionAndRotation = () => {
     const posMatch =
       Math.abs(figure.x - targetFigure.x) < 5 &&
@@ -34,27 +32,15 @@ export default function Level2Rotate() {
     const angleMatch =
       Math.abs(((figure.angle % 360) + 360) % 360 - targetFigure.angle) < 5;
 
-    if (posMatch && angleMatch) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
+    setIsCorrect(posMatch && angleMatch);
   };
 
-  // Dibuja la figura objetivo en gris
-  const drawTargetFigure = (
-    p5,
-    originX,
-    originY,
-    transformVector,
-    getBaseVectors
-  ) => {
+  const drawTargetFigure = (p5, originX, originY, transformVector, getBaseVectors) => {
     const baseVectors = getBaseVectors(targetFigure.type, targetFigure.size);
     const transformedVectors = baseVectors.map((v) =>
       transformVector(v, targetFigure.scale, targetFigure.angle)
     );
 
-    // Vectores objetivo
     transformedVectors.forEach((v) => {
       p5.stroke(150);
       p5.line(
@@ -65,17 +51,14 @@ export default function Level2Rotate() {
       );
     });
 
-    // Figura gris objetivo
     p5.push();
     p5.translate(originX + targetFigure.x, originY - targetFigure.y);
     p5.scale(targetFigure.scale);
     p5.rotate(p5.radians(targetFigure.angle));
     p5.fill(180);
     p5.noStroke();
-    if (targetFigure.type === "square") {
-      p5.rectMode(p5.CENTER);
-      p5.rect(0, 0, targetFigure.size, targetFigure.size);
-    }
+    p5.rectMode(p5.CENTER);
+    p5.rect(0, 0, targetFigure.size, targetFigure.size);
     p5.pop();
   };
 
@@ -85,11 +68,16 @@ export default function Level2Rotate() {
         Nivel 3: Mueve y rota la figura para igualar la objetivo
       </h2>
 
-      <FigureTransformCanvas
-        figure={figure}
-        setFigure={setFigure}
-        extraDraw={drawTargetFigure}
-      />
+      {/* Igual que en Nivel 2 */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <FigureTransformCanvas
+          figure={figure}
+          setFigure={setFigure}
+          onVectorsUpdate={setVectors}
+          extraDraw={drawTargetFigure}
+        />
+        <FigureVectorsInfo vectors={vectors} />
+      </div>
 
       <FigureTransformPanel figure={figure} setFigure={setFigure} />
 
@@ -101,8 +89,11 @@ export default function Level2Rotate() {
       </button>
 
       {isCorrect && (
-        <p className="text-green-600 font-bold">¡Correcto! Nivel completado</p>
+        <p className="text-green-600 font-bold mt-2">
+          ¡Correcto! Nivel completado
+        </p>
       )}
     </div>
   );
+
 }

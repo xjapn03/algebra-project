@@ -1,9 +1,10 @@
 import { useState } from "react";
+import Level1VectorGame from "./components/Levels/Level1VectorGameCanvas";
 import VectorGame from "./components/VectorGame";
 import Level1DrawShape from "./components/Levels/Level2DrawShape";
-import Level2Rotate from "./components/Levels/Level3Rotate";
-import Level3Transform from "./components/Levels/Level4Transform";
-import Level4ImageMatrix from "./components/Levels/Level5ImageMatrix";
+import Level3Rotate from "./components/Levels/Level3Rotate";
+import Level4Transform from "./components/Levels/Level4Transform";
+import Level5ImageMatrix from "./components/Levels/Level5ImageMatrix";
 
 export default function App() {
   const [currentLevel, setCurrentLevel] = useState(null);
@@ -59,9 +60,9 @@ export default function App() {
         <div className="flex flex-col items-center">
           {currentLevel === "vectors" && <VectorGame />}
           {currentLevel === "drawShape" && <Level1DrawShape />}
-          {currentLevel === "rotate" && <Level2Rotate />}
-          {currentLevel === "transform" && <Level3Transform />}
-          {currentLevel === "imageMatrix" && <Level4ImageMatrix />}
+          {currentLevel === "rotate" && <Level3Rotate />}
+          {currentLevel === "transform" && <Level4Transform />}
+          {currentLevel === "imageMatrix" && <Level5ImageMatrix />}
 
           <button
             onClick={goBackToMenu}
